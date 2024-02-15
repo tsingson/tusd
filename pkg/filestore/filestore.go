@@ -20,8 +20,10 @@ import (
 	"github.com/tus/tusd/v2/pkg/handler"
 )
 
-var defaultFilePerm = os.FileMode(0664)
-var defaultDirectoryPerm = os.FileMode(0754)
+var (
+	defaultFilePerm      = os.FileMode(0o664)
+	defaultDirectoryPerm = os.FileMode(0o754)
+)
 
 // See the handler.DataStore interface for documentation about the different
 // methods.
@@ -59,11 +61,13 @@ func (store FileStore) NewUpload(ctx context.Context, info handler.FileInfo) (ha
 	binPath := store.binPath(info.ID)
 	if info.Storage != nil && info.Storage["Path"] != "" {
 		binPath = filepath.Join(store.Path, info.Storage["Path"])
-	}
-
-	info.Storage = map[string]string{
-		"Type": "filestore",
-		"Path": binPath,
+		info.Storage["Path"] = binPath
+		info.Storage["Type"] = "filestore"
+	} else {
+		info.Storage = map[string]string{
+			"Type": "filestore",
+			"Path": binPath,
+		}
 	}
 
 	// Create binary file with no content
