@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"golang.org/x/exp/slog"
+	"log/slog"
 )
 
 const UploadLengthDeferred = "1"
@@ -429,9 +429,13 @@ func (handler *UnroutedHandler) PostFile(w http.ResponseWriter, r *http.Request)
 			handler.sendError(c, err)
 			return
 		}
-
+		for k, v := range info.Storage {
+			resp.Header[k] = v
+		}
 	}
-
+	for k, v := range info.Storage {
+		resp.Header[k] = v
+	}
 	handler.sendResp(c, resp)
 }
 
@@ -591,6 +595,9 @@ func (handler *UnroutedHandler) PostFileV2(w http.ResponseWriter, r *http.Reques
 
 	}
 
+	for k, v := range info.Storage {
+		resp.Header[k] = v
+	}
 	handler.sendResp(c, resp)
 }
 

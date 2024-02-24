@@ -61,7 +61,9 @@ func (store FileStore) NewUpload(ctx context.Context, info handler.FileInfo) (ha
 	binPath := store.binPath(info.ID)
 	if info.Storage != nil && info.Storage["Path"] != "" {
 		binPath = filepath.Join(store.Path, info.Storage["Path"])
+
 		info.Storage["Path"] = binPath
+		info.Storage["StoragePath"] = binPath
 		info.Storage["Type"] = "filestore"
 	} else {
 		info.Storage = map[string]string{

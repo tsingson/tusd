@@ -23,7 +23,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/tus/tusd/v2/pkg/handler"
 	"golang.org/x/exp/slices"
-	"golang.org/x/exp/slog"
+	"log/slog"
 )
 
 // HookHandler is the main inferface to be implemented by all hook backends.
@@ -218,8 +218,9 @@ func invokeHookSync(typ HookType, event handler.HookEvent, hookHandler HookHandl
 //
 // If you want to create an UnroutedHandler instead of the routed handler, you can first create a routed handler and then
 // extract an unrouted one:
-//   routedHandler := hooks.NewHandlerWithHooks(...)
-//   unroutedHandler := routedHandler.UnroutedHandler
+//
+//	routedHandler := hooks.NewHandlerWithHooks(...)
+//	unroutedHandler := routedHandler.UnroutedHandler
 //
 // Note: NewHandlerWithHooks sets up a goroutine to consume the notfication channels (CompleteUploads, TerminatedUploads,
 // CreatedUploads, UploadProgress) on the created handler. These channels must not be consumed by the caller or otherwise
