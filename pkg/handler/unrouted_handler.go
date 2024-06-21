@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"math"
 	"mime"
 	"net/http"
@@ -13,8 +14,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"golang.org/x/exp/slog"
 )
 
 const UploadLengthDeferred = "1"
@@ -442,6 +441,11 @@ func (handler *UnroutedHandler) PostFile(w http.ResponseWriter, r *http.Request)
 		}
 
 	}
+	// TODO: add by tsingson
+	for k, v := range info.Storage {
+		resp.Header[k] = v
+	}
+	// TODO: end
 
 	handler.sendResp(c, resp)
 }

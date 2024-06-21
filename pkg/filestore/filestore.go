@@ -71,6 +71,9 @@ func (store FileStore) NewUpload(ctx context.Context, info handler.FileInfo) (ha
 		"Type": "filestore",
 		"Path": binPath,
 	}
+	info.Storage["Path"] = binPath
+	info.Storage["StoragePath"] = binPath
+	info.Storage["Type"] = "filestore"
 
 	// Create binary file with no content
 	if err := createFile(binPath, nil); err != nil {
