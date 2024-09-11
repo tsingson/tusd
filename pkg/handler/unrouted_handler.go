@@ -686,7 +686,11 @@ func (handler *UnroutedHandler) HeadFile(w http.ResponseWriter, r *http.Request)
 		// but we stick to 204 to not make the logic less complex.
 		resp.StatusCode = http.StatusNoContent
 	}
-
+	// TODO: add by tsingson
+	for k, v := range info.Storage {
+		resp.Header[k] = v
+	}
+	// TODO: end
 	handler.sendResp(c, resp)
 }
 
