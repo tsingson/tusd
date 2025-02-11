@@ -75,9 +75,10 @@ func (store FileStore) NewUpload(ctx context.Context, info handler.FileInfo) (ha
 	}
 
 	info.Storage = map[string]string{
-		"Type":     "filestore",
-		"Path":     binPath,
-		"InfoPath": infoPath,
+		"Type":        "filestore",
+		"Path":        binPath,
+		"StoragePath": binPath,
+		"InfoPath":    infoPath,
 	}
 
 	// Create binary file with no content
